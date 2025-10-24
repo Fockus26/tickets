@@ -23,6 +23,26 @@ Users can manage tickets directly from the site, but the focus is on backend fun
 
 ---
 
+## 📸 Showcase
+
+### 🔐 Login
+
+![Login](./assets/gifs/Login.gif)
+
+### 📊 Dashboard
+
+![Dashboard](./assets/gifs/Dashboard.gif)
+
+### 🎟 Add Ticket
+
+![Add Ticket](./assets/gifs/Add%20Ticket.gif)
+
+### ✏ Edit Ticket
+
+![Edit Ticket](./assets/gifs/Edit%20Ticket.gif)
+
+---
+
 ## 🛠 Tech Stack
 
 - **Backend:** Flask (Python)
@@ -79,26 +99,6 @@ Tickets/
 
 ---
 
-## 📸 Showcase
-
-### 🔐 Login
-
-![Login](./assets/gifs/Login.gif)
-
-### 📊 Dashboard
-
-![Dashboard](./assets/gifs/Dashboard.gif)
-
-### 🎟 Add Ticket
-
-![Add Ticket](./assets/gifs/Add%20Ticket.gif)
-
-### ✏ Edit Ticket
-
-![Edit Ticket](./assets/gifs/Edit%20Ticket.gif)
-
----
-
 ## ⚙️ Installation & Setup
 
 ### Clone repo
@@ -108,10 +108,30 @@ git clone https://github.com/fockus26/Tickets.git
 cd Tickets
 ```
 
+### Create virtual environment
+
+```bash
+python -m venv venv
+source venv/bin/activate   # macOS/Linux
+venv\Scripts\activate      # Windows
+```
+
 ### Install dependencies
 
 ```bash
 pip install -r requirements.txt
+```
+
+### Environment Variables
+
+Create a `.env` file with:
+
+```env
+FLASK_KEY=YOUR_FLASK_KEY
+API_KEY=YOUR_API_KEY
+DB_URL=YOuR_DB_URL
+ADMIN_USER=admin1234
+ADMIN_PASS=I3S%Hl@%P
 ```
 
 ### Run the app
