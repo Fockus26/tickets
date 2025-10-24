@@ -1,0 +1,132 @@
+{% extends "base.html" %} {% block title %}Dashboard{% endblock %} {% block page
+%}dashboard{% endblock %} {% block heading %}Dashboard{% endblock %} {% block
+style %}
+<style>
+  .flash-messages li {
+    background-color: #d4edda;
+    color: #155724;
+    border: 2px solid #c3e6cb;
+  }
+</style>
+{% endblock %} {% block content %}
+<section class="container dashboard">
+  <div class="filter-wrap" id="main_filter" data-value="">
+    <button class="filter-toggle" aria-label="Filtrar">
+      <span class="icon"><i class="fa-solid fa-filter"></i></span>
+      <span class="label">Filtrar paginas</span>
+    </button>
+
+    <ul class="filter-list" role="menu" aria-hidden="true">
+      <li data-value="">Todos</li>
+      <li data-value="ticketmaster">Ticketmaster</li>
+      <li data-value="superboletos">Superboletos</li>
+    </ul>
+  </div>
+
+  <div>
+    {% if tickets_ingresados %}
+    <h2>Tickets Ingresados</h2>
+    <table id="uncompleted">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Pagina</th>
+          <th>Concierto</th>
+          <th>Evento</th>
+          <th>Mes</th>
+          <th>Dia</th>
+          <th>Hora</th>
+          <th class="actions">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ticket in tickets_ingresados %}
+        <tr data-page="{{ ticket.page_name }}">
+          <td>{{ ticket.id }}</td>
+          <td>{{ ticket.page_name }}</td>
+          <td>{{ ticket.concert_name }}</td>
+          <td>{{ ticket.event_name }}</td>
+          <td>{{ ticket.event_month }}</td>
+          <td>
+            {% if ticket.event_day|length == 1 %} {{ ticket.event_day[0] }} {%
+            else %} Del {{ ticket.event_day[0] }} al {{ ticket.event_day[-1] }}
+            {% endif %}
+          </td>
+          <td>{{ ticket.event_time }}</td>
+          <td class="actions">
+            <a
+              class="fa-solid fa-pencil edit"
+              href="{{ url_for('web.edit_ticket', ticket_id=ticket.id) }}"
+            ></a>
+
+            <form
+              action="{{ url_for('web.delete_ticket', ticket_id=ticket.id) }}"
+              method="post"
+            >
+              <button class="delete" type="submit">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <h2>No hay tickets ingresados</h2>
+    {% endif %}
+  </div>
+  <div>
+    {% if tickets_completados %}
+    <h2>Tickets Completados</h2>
+    <table id="completed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Pagina</th>
+          <th>Concierto</th>
+          <th>Evento</th>
+          <th>Mes</th>
+          <th>Dia</th>
+          <th>Hora</th>
+          <th class="actions">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ticket in tickets_completados %}
+        <tr data-page="{{ ticket.page_name }}">
+          <td>{{ ticket.id }}</td>
+          <td>{{ ticket.page_name }}</td>
+          <td>{{ ticket.concert_name }}</td>
+          <td>{{ ticket.event_name }}</td>
+          <td>{{ ticket.event_month }}</td>
+          <td>
+            {% if ticket.event_day|length == 1 %} {{ ticket.event_day[0] }} {%
+            else %} Del {{ ticket.event_day[0] }} al {{ ticket.event_day[-1] }}
+            {% endif %}
+          </td>
+          <td>{{ ticket.event_time }}</td>
+          <td class="actions">
+            <a
+              class="fa-solid fa-pencil edit"
+              href="{{ url_for('web.edit_ticket', ticket_id=ticket.id) }}"
+            ></a>
+            <form
+              action="{{ url_for('web.delete_ticket', ticket_id=ticket.id) }}"
+              method="post"
+            >
+              <button class="delete" type="submit">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <h2>No hay tickets completados</h2>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

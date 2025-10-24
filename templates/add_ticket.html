@@ -1,59 +1,85 @@
-{% extends "base.html" %}
-{% block title %} Añadir Ticket {% endblock %}
-{% block content %}
-<div class="admin-container">
-    <div class="navigation">
-        <a href="{{ url_for('home') }}" class="nav">Home</a>
+{% extends "base.html" %} {% block title %} Añadir Ticket {% endblock %} {%
+block page %}add_ticket{% endblock %} {% block heading %}Añadir Ticket{%
+endblock %} {% block content %}
+<section class="container">
+  <div class="filter-wrap" id="main_filter" data-value="{{ source or '' }}">
+    <button class="filter-toggle" aria-label="Filtrar">
+      <span class="icon"><i class="fa-solid fa-filter"></i></span>
+      <span class="label">Paginas</span>
+    </button>
+
+    <ul class="filter-list" role="menu" aria-hidden="true">
+      <li
+        data-value="ticketmaster"
+        class="{{ 'active' if source=='ticketmaster' else '' }}"
+      >
+        Ticketmaster
+      </li>
+      <li
+        data-value="superboletos"
+        class="{{ 'active' if source=='superboletos' else '' }}"
+      >
+        Superboletos
+      </li>
+    </ul>
+  </div>
+
+  <form method="POST" action="{{ url_for('web.add_ticket') }}">
+    <input
+      autocomplete="off"
+      type="hidden"
+      name="page_name"
+      id="page_name"
+      value="{{ source or 'ticketmaster' }}"
+    />
+    <div class="form-grid-3">
+      <div class="form-group">
+        <label for="concert_name">Nombre del Concierto</label>
+        <input
+          autocomplete="off"
+          type="text"
+          id="concert_name"
+          name="concert_name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="event_name">Nombre del Evento</label>
+        <input
+          autocomplete="off"
+          type="text"
+          id="event_name"
+          name="event_name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="event_date_range">Fecha y Hora del Evento</label>
+        <input
+          autocomplete="off"
+          type="text"
+          id="event_date_range"
+          name="event_date_range"
+        />
+      </div>
     </div>
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class="flash-messages">
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+    <div id="sections" class="sections-container">
+      <!-- secciones inyectadas por JS -->
+    </div>
 
-    <h1>Añadir Ticket</h1>
+    <!-- floating add section -->
+    <button
+      type="button"
+      class="floating-button fa-solid fa-plus"
+      id="add_section_btn"
+      title="Anadir Seccion"
+    ></button>
 
-    <form method="POST" action="{{ url_for('add_ticket', source=source) }}" class="ticket-form">
-        <div class="form-group">
-            <label for="page_name">Nombre de la Página:</label>
-            <input type="text" id="page_name" name="page_name" value="{{ source }}" readonly>
-        </div>
+    <button
+      type="submit"
+      class="floating-button send fa-solid fa-check"
+      title="Añadir Ticket"
+    ></button>
+  </form>
+</section>
 
-        <div class="form-group">
-            <label for="concert_name">Nombre del Concierto:</label>
-            <input type="text" id="concert_name" name="concert_name" required>
-        </div>
-
-        <div class="form-group">
-            <label for="event_name">Nombre del Evento:</label>
-            <input type="text" id="event_name" name="event_name" required>
-        </div>
-
-        <div class="form-group">
-            <label for="event_date_range">Fecha y Hora del Evento:</label>
-            <input type="text" id="event_date_range" name="event_date_range" required>
-        </div>
-
-        <button type="button" onclick="addSection('{{source}}')" class="add-section-btn">Añadir Sección</button>
-
-        <div id="section_container" class="section-container"></div>
-
-        <button type="submit" class="submit-btn">Añadir Ticket</button>
-    </form>
-
-    <script>
-        // Inicializar Flatpickr con el modo de rango
-        flatpickr("#event_date_range", {
-            mode: "range",
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            time_24hr: true
-        });
-    </script>
-</div>
 {% endblock %}

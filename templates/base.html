@@ -1,20 +1,94 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
     <title>{% block title %} {% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='/assets/favicon.ico') }}" sizes="32x32">
-    <link rel="stylesheet" href="{{ url_for('static', filename='/styles.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://kit.fontawesome.com/99b01781d1.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename='/assets/favicon.ico') }}"
+      sizes="32x32"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <link
+      rel="manifest"
+      href="{{ url_for('static', filename='/site.webmanifest') }}"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="{{ url_for('static', filename='/assets/icon-512.webp') }}"
+    />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#222222" />
+    <meta property="og:title" content="Ticket" />
+    <meta property="og:site_name" content="Ticket" />
+    <meta
+      property="og:description"
+      content="A lightweight Flask web app for managing tickets, built as the API/frontend client for BotTickets."
+    />
+    <meta
+      property="og:image"
+      content="https://tickets-henna.vercel.app/Preview.png"
+    />
+    <meta property="og:url" content="https://tickets-henna.vercel.app" />
+    <meta property="og:type" content="website" />
+    <script
+      src="https://kit.fontawesome.com/99b01781d1.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     {% block style %} {% endblock %}
-</head>
-<body>
-    {% block content %} {% endblock %}
-    <script src="{{ url_for('static', filename='/index.js') }}"></script>
-    {% block script %} {% endblock %}
-</body>
+  </head>
+  <body data-page="{% block page %} {% endblock %}">
+    <header class="site-header">
+      <nav class="header-inner">
+        {% if request.endpoint != 'login' %}
+        <a href="{{ url_for('web.home') }}"
+          ><img src="/static/assets/icon-512.webp" alt="Logo"
+        /></a>
+        {% endif %}
+        <h1>{% block heading %} {% endblock %}</h1>
+        {% if request.endpoint != 'login' %}
+        <div>
+          {% if session.get('logged_in') %}
+          <a href="{{ url_for('web.add_ticket') }}" class="create"
+            >Añadir ticket</a
+          >
+          <a
+            href="{{ url_for('auth.logout') }}"
+            class="fa-solid fa-right-from-bracket"
+            title="Cerrar Sesion"
+          ></a>
+          {% endif %}
+        </div>
+        {% endif %}
+      </nav>
+    </header>
+
+    <main>
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul class="flash-messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %} {% endwith %} {% block content %} {% endblock %}
+    </main>
+
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/main.js') }}"
+    ></script>
+  </body>
 </html>

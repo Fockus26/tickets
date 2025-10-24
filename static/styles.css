@@ -1,335 +1,553 @@
-/* styles.css */
+:root {
+  --flash-bg: #f8d7da;
+  --flash-color: #721c24;
+  --color: #222;
+  --bg-color: #f4f4f4;
+}
 
-/* Estilo general del cuerpo */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--color);
+}
+
+::selection {
+  background-color: var(--color);
+  color: var(--bg-color);
+}
+
+h1 {
+  font-size: 28px;
+  width: 100%;
+  text-align: center;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+ul,
+ol {
+  list-style: none;
 }
 
 a {
-    text-decoration: none;
-    color: white;
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
 }
 
-/* Estilo del contenedor de login */
-.login-container {
-    padding: 20px;
-    max-width: 400px;
-    margin: 50px auto;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-.login-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-}
-
-/* Estilo para los mensajes flash */
-.flash-messages {
-    margin-bottom: 20px;
-}
-
-.flash-messages p {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    border: 1px solid #f5c6cb;
-    border-radius: 4px;
-    text-align: center;
-}
-
-/* Estilo del formulario de login */
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.form-group .form-control {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.form-group .btn {
-    padding: 10px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.form-group .btn:hover {
-    background-color: #555;
-}
-
-/* Contenedor principal de la página de administración */
-.admin-container {
-    padding: 20px;
-    max-width: 1000px;
-    margin: 50px auto;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-/* Estilo de los botones de navegación */
-.nav-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    background-color: #333;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.nav-btn:hover {
-    background-color: #555;
-}
-
-/* Estilo de las fuentes de tickets */
-.ticket-source-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.ticket-source-container label {
-    margin-right: 10px;
-    font-weight: bold;
-}
-
-/* Estilos para el select */
-select {
-    padding: 8px 12px;
-    border: 1px solid #555;
-    border-radius: 4px;
-    font-size: 16px;
-    margin-bottom: 15px;
-    width: 200px;
-    color: white;
-    background-color: #222;
-}
-
-/* Estilos para los botones */
+input,
+select,
 button {
-    background-color: #444; /* Gris oscuro */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 5px;
-    margin-bottom: 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+  padding: 10px;
+  border: 2px solid #333;
+  border-radius: 4px;
+  transition: 0.25s ease;
+  width: 100%;
 }
-
+input:hover,
+input:focus,
+select:hover,
+select:focus,
 button:hover {
-    background-color: #333; /* Gris más oscuro */
+  border-color: var(--color);
 }
 
-.delete-btn {
-    background-color: #800000; /* Borgoña oscuro */
+input {
+  max-height: 40px;
 }
 
-.delete-btn:hover {
-    background-color: #660000; /* Borgoña más oscuro */
+select,
+button {
+  cursor: pointer;
+  text-align: center;
+  color: var(--bg-color);
+  background-color: #333;
+}
+select,
+button:hover {
+  color: #fff;
+  background-color: var(--color);
 }
 
-/* Estilo de las tablas de tickets */
-.tickets-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.tickets-table th, .tickets-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+input[type="checkbox"] {
+  width: 40px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  transition: 0.25s EASE;
+}
+input[type="checkbox"]:checked {
+  color: var(--bg-color);
+  background-color: var(--color);
 }
 
-.tickets-table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
+header {
+  background-color: var(--color);
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.2);
+}
+header nav {
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 0;
+  font-size: 16px;
+  color: var(--bg-color);
+  position: relative;
+}
+header nav h1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+}
+header a img {
+  width: 40px;
+}
+header div {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+header div a {
+  padding: 10px 10px;
+  transition: 0.25s ease;
+}
+header div a.create {
+  border-radius: 4px;
+  color: var(--color);
+  background-color: var(--bg-color);
+  font-weight: 600;
+  text-wrap: nowrap;
+}
+header div a.create:hover {
+  background-color: white;
+}
+header div a:not(.create) {
+  font-size: 28px;
+}
+header div a:not(.create):hover {
+  color: white;
 }
 
-.tickets-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+section.login {
+  max-width: 350px;
 }
 
-.tickets-table tr:hover {
-    background-color: #f1f1f1;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
-
-.tickets-table1 th {
-    background-color: #d4edda; /* Color de fondo verde */
-    color: #155724; /* Color del texto */
-    font-weight: bold;
+form fieldset {
+  padding: 20px;
+  border-color: #333;
 }
-
-.tickets-table1 {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+form fieldset legend {
+  color: #333;
 }
-
-.tickets-table1 th, .tickets-table1 td {
-    border: 1px solid #c3e6cb;
-    padding: 8px;
-    text-align: left;
-}
-
-.tickets-table1 tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.tickets-table1 tr:hover {
-    background-color: #f1f1f1;
-}
-
-
-/* Estilos para la navegación */
-.navigation {
-    margin-bottom: 20px;
-}
-
-.nav {
-    display: inline-flex;
-    margin-right: 10px;
-    padding: 10px 20px;
-    color: #fff;
-    background-color: #333;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.nav:hover {
-    background-color: #555;
-}
-
-
-/* Estilos para el formulario de tickets */
-.ticket-form {
-    max-width: 400px;
-    margin: 0 auto;
+form label {
+  font-weight: bold;
 }
 
 .form-group {
-    margin-bottom: 20px;
+  display: grid;
+  gap: 10px;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+/* layout formularios con multiples columnas */
+.form-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  align-items: center;
 }
 
-.form-group input[type="text"],
-.form-group input[type="datetime-local"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    box-sizing: border-box;
+.form-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  align-items: center;
 }
 
-.group {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    box-sizing: border-box;
+.container {
+  max-width: 1200px;
+  width: 90%;
+  margin: 80px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  display: grid;
+  gap: 20px;
 }
 
-/* Estilos para el botón de añadir sección */
-.add-section-btn {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-bottom: 20px;
+.flash-messages {
+  display: grid;
+  gap: 20px;
+  margin: 40px auto 0px;
 }
 
-.add-section-btn:hover {
-    background-color: #555;
+.flash-messages li {
+  background-color: var(--flash-bg);
+  color: var(--flash-color);
+  font-weight: bold;
+  padding: 10px;
+  border: 2px solid #f5c6cb;
+  border-radius: 4px;
+  text-align: center;
+  margin: 0 auto;
 }
 
-/* Estilos para el contenedor de secciones */
-.section-container {
-    margin-bottom: 20px;
+section.dashboard {
+  gap: 40px;
 }
 
-/* Estilos para el botón de enviar */
-.submit-btn {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
+section.dashboard div {
+  display: grid;
+  gap: 10px;
 }
 
-.submit-btn:hover {
-    background-color: #555;
+/* -----------------
+  FILTRO ANIMADO
+   no <select>, custom list
+   ----------------- */
+.filter-wrap {
+  position: relative;
+  display: inline-block;
+  z-index: 100;
+  width: fit-content;
 }
 
-/* Estilos para los checkbox */
-input[type="checkbox"] {
-    -webkit-appearance: none; /* Eliminar la apariencia predeterminada del navegador */
-    -moz-appearance: none;
-    appearance: none;
-    width: 20px; /* Tamaño del checkbox */
-    height: 20px;
-    background-color: #fff; /* Color de fondo */
-    border: 2px solid #555; /* Borde del checkbox */
-    border-radius: 4px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor al pasar sobre el checkbox */
-    vertical-align: middle; /* Alinear verticalmente con el texto */
-    margin-right: 5px; /* Margen a la derecha */
+.filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: #222;
+  color: #f4f4f4;
+  border: 2px solid #222;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  width: 100%;
+  transition: width 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  box-sizing: border-box;
 }
 
-/* Estilo del checkbox cuando está marcado */
-input[type="checkbox"]:checked {
-    background-color: #555; /* Cambiar color de fondo cuando está marcado */
+/* icono visible siempre */
+.filter-toggle .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  opacity: 1;
+  transition: opacity 180ms ease width 180ms ease;
 }
 
-/* Estilo del indicador dentro del checkbox cuando está marcado */
-input[type="checkbox"]:checked::before {
-    content: "\2713"; /* Símbolo de marca de verificación Unicode */
-    font-size: 14px; /* Tamaño de la marca de verificación */
-    color: #fff; /* Color del símbolo */
-    text-align: center; /* Alinear al centro */
-    line-height: 20px; /* Alinear verticalmente */
+/* label/placeholder del select (aparece durante la expansion) */
+.filter-toggle .label {
+  color: #f4f4f4;
+  opacity: 0;
+  transform: translateX(6px);
+  white-space: nowrap;
+  transition: opacity 180ms ease, transform 180ms ease width 180ms ease;
+  font-size: 14px;
+  width: 0px;
+}
+
+/* lista de opciones (no <select>) */
+.filter-list {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 0px;
+  background: #222;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  transform-origin: top;
+  opacity: 0;
+  transform: scaleY(0.95) translateY(-6px);
+  transition: opacity 180ms ease, transform 180ms ease,
+    width 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  pointer-events: none;
+  z-index: 120;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* cada opcion */
+.filter-list li {
+  list-style: none;
+  padding: 12px 12px;
+  background: #333;
+  color: #f4f4f4;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 140ms ease, color 140ms ease;
+}
+
+/* hover/seleccion */
+.filter-list li:hover,
+.filter-list li.active {
+  background: #222;
+  color: #fff;
+}
+
+/* estado abierto */
+.filter-wrap.open .filter-toggle {
+  width: 200px;
+  padding: 8px 12px;
+}
+.filter-wrap.open .filter-toggle .icon {
+  width: 0px;
+  opacity: 0;
+}
+.filter-wrap.open .filter-toggle .label {
+  width: auto;
+  opacity: 1;
+  transform: translateX(0);
+}
+.filter-wrap.open .filter-list {
+  opacity: 1;
+  transform: scaleY(1) translateY(0);
+  pointer-events: auto;
+  width: 200px;
+}
+
+/* -----------------
+  TABLA MINIMALISTA
+   ----------------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+/* headers oscuros */
+table thead th {
+  background: #222;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 10px;
+}
+table#completed thead th {
+  background-color: #155724;
+}
+table thead th:first-child {
+  border-top-left-radius: 6px;
+}
+table thead th:nth-child(7) {
+  border-top-right-radius: 6px;
+}
+
+/* filas transparentes por defecto, hover visible */
+table tbody tr {
+  background: transparent;
+  transition: background 160ms ease;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+}
+table tbody tr:last-child {
+  border-end-end-radius: 6px;
+}
+table tbody tr:hover {
+  background: #f4f4f4;
+}
+
+/* que solo exista border-bottom ligero */
+table td {
+  padding: 12px 10px;
+  vertical-align: middle;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+/* ocultar th acciones visualmente (pero mantener semantica) */
+table th.actions {
+  display: none;
+}
+
+/* columna acciones: se renderiza en la propia celda, display:flex */
+td.actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  justify-self: center;
+  max-width: 100px;
+}
+
+/* boton editar: sin background, solo icono */
+td.actions a.edit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 10px;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+td.actions a.edit:hover {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* boton delete con color/fondo (visible) */
+button.delete {
+  width: 40px;
+  border-radius: 6px;
+  background: var(--flash-color);
+  border-color: var(--flash-color);
+  color: #fff;
+  cursor: pointer;
+}
+button.delete:hover {
+  filter: brightness(1.5);
+}
+
+/* small adjustments para dia/mes/hora cells */
+td.day,
+td.month,
+td.time {
+  white-space: nowrap;
+}
+
+/* -----------------
+  SECCIONES: entrada/salida animada
+  use max-height + opacity para transiciones suaves
+   ----------------- */
+#sections {
+  display: grid;
+  gap: 20px;
+  overflow: hidden;
+}
+
+/* cada seccion controla su altura con inner wrapper */
+.section {
+  overflow: hidden;
+  transition: none;
+  display: grid;
+  gap: 10px;
+}
+
+/* wrapper que anima altura y opacidad */
+.section .section-inner {
+  display: grid;
+  gap: 10px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: max-height 280ms ease, opacity 220ms ease, transform 220ms ease;
+  background: transparent;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* estado enter activo */
+.section.enter .section-inner {
+  max-height: 260px; /* suficiente para row content */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* estado exit */
+.section.exit .section-inner {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* z-index control para que no sobrepase visualmente */
+.section {
+  position: relative;
+  z-index: 1;
+}
+.section.enter {
+  z-index: 1;
+}
+.section.exit {
+  z-index: 1;
+}
+
+/* section-row layouts */
+.section-row {
+  display: grid;
+  gap: 10px;
+  align-items: center;
+}
+.section-row.default {
+  grid-template-columns: 1fr 1fr auto;
+}
+.section-row.superboletos {
+  grid-template-columns: 1fr 1fr 1fr auto;
+}
+.section-row div {
+  display: grid;
+  gap: 5px;
+}
+.section-row .actions-inner {
+  display: flex;
+}
+
+/* labels en seccion */
+.section .label {
+  font-weight: 400;
+}
+
+/* floating buttons (unchanged) */
+.floating-button {
+  position: fixed;
+  right: 24px;
+  bottom: 90px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: #333;
+  color: #f4f4f4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 140;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: 0.25s ease;
+}
+.floating-button:hover {
+  transform: scale(1.05);
+  background: #222;
+  color: white;
+}
+.floating-button.send {
+  bottom: 24px;
 }

@@ -32,54 +32,96 @@ Users can manage tickets directly from the site, but the focus is on backend fun
 ---
 
 ## 📂 Project Structure
+
 ```text
 Tickets/
-│── main.py
-│── requirements.txt
 │
-├── static/
-│   ├── assets/
-│   ├── index.js
-│   └── styles.css
+├── app.py
+├── config.py
+├── extensions.py
+├── requirements.txt
+│
+├── database/
+│   └── ticket.db
+│
+├── models/
+│   └── ticket.py
+│
+├── routes/
+│   ├── api_routes.py
+│   ├── auth_routes.py
+│   └── web_routes.py
+│
+├── utils/
+│   ├── decorators.py
+│   ├── helpers.py
+│   └── validators.py
 │
 ├── templates/
 │   ├── add_ticket.html
+│   ├── base.html
+│   ├── dashboard.html
 │   ├── edit_ticket.html
-│   ├── index.html
-│   └── update.html
+│   └── login.html
 │
-└── README.md
+├── static/
+│   ├── assets/
+│   ├── styles.css
+│   └── js/
+│       ├── filter.js
+│       ├── main.js
+│       ├── sections.js
+│       └── utils.js
+│
+└── assets/
+
 ```
 
 ---
 
 ## 📸 Showcase
 
-_(Screenshots, GIFs or demo videos will be added here)_
+### 🔐 Login
+
+![Login](./assets/gifs/Login.gif)
+
+### 📊 Dashboard
+
+![Dashboard](./assets/gifs/Dashboard.gif)
+
+### 🎟 Add Ticket
+
+![Add Ticket](./assets/gifs/Add%20Ticket.gif)
+
+### ✏ Edit Ticket
+
+![Edit Ticket](./assets/gifs/Edit%20Ticket.gif)
 
 ---
 
 ## ⚙️ Installation & Setup
 
 ### Clone repo
+
 ```bash
 git clone https://github.com/fockus26/Tickets.git
 cd Tickets
 ```
 
 ### Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### Run the app
+
 ```bash
 python main.py
 ```
 
 The app will run on:
 👉 http://localhost:5000
-
 
 ---
 
@@ -93,9 +135,6 @@ While not visually optimized, it fulfills its purpose of managing tickets and ex
 
 ## 📈 Future Improvements
 
-- 🎨 Improve UI with modern design (Bootstrap/Tailwind)
-- 🗄️ Database integration for persistent storage
-- 🔑 Add user authentication system
 - 📱 Responsive redesign for mobile
 
 ---

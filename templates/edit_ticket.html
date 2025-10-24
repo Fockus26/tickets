@@ -1,49 +1,178 @@
-{% extends "base.html" %}
-{% block title %}Editar Ticket{% endblock %}
+{% extends "base.html" %} {% block title %}Editar Ticket{% endblock %} {% block
+page %}edit_ticket{% endblock %} {% block heading %}Editar Ticket{% endblock %}
 {% block content %}
-    <div class="admin-container">
-        <div class="navigation">
-            <a href="{{ url_for('home') }}" class="nav-btn">Home</a>
-        </div>
+<section class="container">
+  <!-- filtro: permite cambiar page_name al editar -->
+  <div class="filter-wrap" id="main_filter" data-value="{{ ticket.page_name }}">
+    <button class="filter-toggle" aria-label="Filtrar">
+      <span class="icon"><i class="fa-solid fa-filter"></i></span>
+      <span class="label">Paginas</span>
+    </button>
 
-        <h1>Editar Ticket</h1>
-        <form method="POST" action="{{ url_for('edit_ticket', ticket_id=ticket_id, event_id=event_id, api_key=api_key) }}">
-            <div class="form-group">
-                <label for="concert_name">Evento</label>
-                <input type="text" id="concert_name" name="concert_name" value="{{ ticket.concert_name }}" class="form-control">
-            </div>
+    <ul class="filter-list" role="menu" aria-hidden="true">
+      <li
+        data-value="ticketmaster"
+        class="{{ 'active' if ticket.page_name=='ticketmaster' else '' }}"
+      >
+        Ticketmaster
+      </li>
+      <li
+        data-value="superboletos"
+        class="{{ 'active' if ticket.page_name=='superboletos' else '' }}"
+      >
+        Superboletos
+      </li>
+    </ul>
+  </div>
 
-            <div class="form-group">
-                <label for="event_name">Nombre</label>
-                <input type="text" id="event_name" name="event_name" value="{{ ticket.event_name }}" class="form-control">
-            </div>
+  <form
+    method="POST"
+    action="{{ url_for('web.edit_ticket', ticket_id=ticket.id) }}"
+  >
+    <input
+      autocomplete="off"
+      type="hidden"
+      id="page_name"
+      name="page_name"
+      value="{{ ticket.page_name }}"
+    />
 
-            <h2>Secciones</h2>
-            {% for section in sections %}
-                <fieldset class="form-group">
-                    <legend>Sección {{ loop.index }}</legend>
-                    <div class="form-group">
-                        <label for="section_id_{{ loop.index }}">ID de la Sección</label>
-                        <input type="text" id="section_id_{{ loop.index }}" name="section_id[]" value="{{ loop.index }}" class="form-control" readonly>
-                    </div>
-                    <div class="form-group" style="margin-top: 20px;">
-                        <label for="section_name_{{ loop.index }}">Nombre</label>
-                        <input type="text" id="section_name_{{ loop.index }}" name="section_name[]" value="{{ section.section_name }}" class="form-control">
-                    </div>
+    <div class="form-grid-4">
+      <div class="form-group">
+        <label for="concert_name">Evento</label>
+        <input
+          autocomplete="off"
+          type="text"
+          id="concert_name"
+          name="concert_name"
+          value="{{ ticket.concert_name }}"
+        />
+      </div>
 
-                    <div class="form-group">
-                        <label for="num_tickets_{{ loop.index }}">Número de Tickets</label>
-                        <input type="number" id="num_tickets_{{ loop.index }}" name="num_tickets[]" value="{{ section.num_tickets }}" class="form-control">
-                    </div>
+      <div class="form-group">
+        <label for="event_name">Nombre</label>
+        <input
+          autocomplete="off"
+          type="text"
+          id="event_name"
+          name="event_name"
+          value="{{ ticket.event_name }}"
+        />
+      </div>
 
-                    <div class="form-group">
-                        <label for="section_is_purchase_{{ loop.index }}">Comprar Sección</label>
-                        <input type="checkbox" id="section_is_purchase_{{ loop.index }}" name="section_is_purchase[]" {% if section.is_purchase %} checked {% endif %}>
-                    </div>
-                </fieldset>
-            {% endfor %}
+      <div class="form-group">
+        <label for="event_date_range">Fecha y Hora del Evento</label>
+        <input
+          autocomplete="off"
+          type="text"
+          id="event_date_range"
+          name="event_date_range"
+          value="{% if event_date_value and ticket.event_time %}{{ event_date_value }}T{{ ticket.event_time }}{% else %}{{ event_date_value or '' }}{% endif %}"
+        />
+      </div>
 
-            <button type="submit" class="btn">Actualizar</button>
-        </form>
+      <div class="form-group">
+        <label for="verification_code">Codigo verificacion</label>
+        <input
+          autocomplete="off"
+          type="text"
+          id="verification_code"
+          name="verification_code"
+          value="{{ (sections[0].verification_code if sections and sections[0].verification_code is defined else '') }}"
+        />
+      </div>
     </div>
+
+    <!-- Secciones: mantener cada seccion en fila -->
+    <div id="sections" class="sections-container">
+      {% for section in sections %}
+      <div class="section enter">
+        <div class="section-inner">
+          <h3 class="section-title">
+            Seccion {{ section.section_name if section.section_name ~
+            loop.index}}
+          </h3>
+
+          <div
+            class="section-row {% if ticket.page_name == 'superboletos' %}superboletos{% else %}default{% endif %}"
+          >
+            <div>
+              <label class="label">Nombre de la seccion</label>
+              <input
+                autocomplete="off"
+                type="text"
+                name="section_name[]"
+                value="{{ section.section_name }}"
+              />
+            </div>
+            <div>
+              <label class="label">Numero de tickets</label>
+              <input
+                autocomplete="off"
+                type="number"
+                name="num_tickets[]"
+                value="{{ section.num_tickets }}"
+              />
+            </div>
+
+            {% if ticket.page_name == 'superboletos' %}
+            <div>
+              <label class="label">Fecha y hora</label>
+              <input
+                autocomplete="off"
+                type="text"
+                name="event_date_time_tickets[]"
+                class="flat-datetime"
+                value="{{ section_dt_values[loop.index0] if section_dt_values and section_dt_values|length > loop.index0 else '' }}"
+              />
+            </div>
+            {% else %}
+            <!-- Si no es superboletos, enviar un campo vacío para mantener índices (opcional) -->
+            <input
+              autocomplete="off"
+              type="hidden"
+              name="event_date_time_tickets[]"
+              value=""
+            />
+            {% endif %}
+
+            <!-- checkbox is_purchase (envía section_id cuando está checked) -->
+            <div>
+              <label>&nbsp;</label>
+              <input
+                autocomplete="off"
+                class="fa-solid fa-check"
+                type="checkbox"
+                title="Permitir Compra"
+                name="section_is_purchase[]"
+                value="{{ section.section_id }}"
+                {%
+                if
+                section.is_purchase
+                %}checked{%
+                endif
+                %}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <button
+      type="button"
+      class="floating-button fa-solid fa-plus"
+      id="add_section_btn"
+      title="Anadir Seccion"
+    ></button>
+    <!-- boton actualizar flotante -->
+    <button
+      type="submit"
+      class="floating-button send fa-solid fa-pencil"
+      title="Editar Ticket"
+    ></button>
+  </form>
+</section>
+
 {% endblock %}
